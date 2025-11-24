@@ -1,0 +1,39 @@
+<div class="payments-container">
+  <div class="header">
+    <h2>💳 Payments</h2>
+    <button routerLink="/payments/add" class="primary-btn">+ Add Payment</button>
+  </div>
+
+  <table class="styled-table" *ngIf="payments().length > 0; else noData">
+    <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Amount</th>
+        <th>Currency</th>
+        <th>Created</th>
+        <th class="actions-col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of payments()">
+        <td>{{ p.reference }}</td>
+        <td>{{ p.amount }}</td>
+        <td>{{ p.currency }}</td>
+        <td>{{ p.createdAt | date:'dd MMM yyyy' }}</td>
+        <td class="d-flex gap-2">
+          <button [routerLink]="['/payments/edit', p.id]" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+            ✏️ Edit
+          </button>
+
+          <button (click)="delete(p)" class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1">
+            🗑 Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noData>
+    <div class="empty">No payments found. Click "Add Payment" to get started.</div>
+  </ng-template>
+</div>

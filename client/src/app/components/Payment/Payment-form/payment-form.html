@@ -1,0 +1,68 @@
+<div class="container mt-5" style="max-width: 600px;">
+
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white fw-bold">
+      {{ isEditMode ? '✏️ Edit Payment' : '➕ Add Payment' }}
+    </div>
+
+    <div class="card-body">
+
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+
+        <!-- Amount -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Amount</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            formControlName="amount"
+            placeholder="Enter amount"
+          >
+          <div class="text-danger" 
+            *ngIf="paymentForm.controls['amount'].invalid && paymentForm.controls['amount'].touched">
+            Amount is required
+          </div>
+        </div>
+
+        <!-- Currency -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Currency</label>
+          <select class="form-select" formControlName="currency">
+            <option value="">Select Currency</option>
+            <option *ngFor="let c of currencies" [value]="c">{{ c }}</option>
+          </select>
+        </div>
+
+        <!-- Client Request ID only in edit -->
+        <div class="mb-3" *ngIf="isEditMode">
+          <label class="form-label fw-semibold">Client Request ID</label>
+          <input type="text" class="form-control" readonly formControlName="clientRequestId">
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between mt-4">
+
+          <button class="btn btn-success" type="submit">
+            {{ isEditMode ? 'Update' : 'Create Payment' }}
+          </button>
+
+          <button class="btn btn-secondary" routerLink="/" type="button">
+            Cancel
+          </button>
+
+          <button 
+            class="btn btn-danger"
+            type="button" 
+            *ngIf="isEditMode"
+            (click)="deletePayment()"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
