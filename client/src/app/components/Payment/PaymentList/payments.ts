@@ -23,15 +23,6 @@ export class PaymentList {
   }
 
   getPayments() {
-    // this.svc.getPayments().subscribe({
-    //   next: (res) => {
-    //     this.payments.set(res);
-    //     this.loading = false;
-    //   },
-    //   error: (err) => {
-    //     this.loading = false;
-    //   }
-    // });
     this.svc.getPayments().subscribe(res => {
       const formatted = res.map(item => ({
         ...item,
